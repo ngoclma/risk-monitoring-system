@@ -1,7 +1,5 @@
-// Update client/src/pages/Dashboard.tsx
-
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Grid, Typography, Box, CircularProgress, Tab, Tabs } from '@mui/material';
+import { Container, Grid, Typography, Box, CircularProgress, Tab, Tabs, Snackbar, Alert } from '@mui/material';
 import PositionsTable from '../components/PositionsTable';
 import MarginStatusCard from '../components/MarginStatusCard';
 import PortfolioCompositionChart from '../components/PortfolioCompositionChart';
@@ -42,6 +40,22 @@ const Dashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState(0);
+  const [marginCallTriggered, setMarginCallTriggered] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    if (marginStatus && marginStatus.margin_call_triggered) {
+      // Trigger margin call alert
+      setMarginCallTriggered(true);
+      setShowAlert(true);
+    } else {
+      setMarginCallTriggered(false);
+    }
+  }, [marginStatus]);
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -143,6 +157,17 @@ const Dashboard: React.FC = () => {
             </TabPanel>
           </>
         )}
+
+        <Snackbar
+          open={showAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+            Margin Call Triggered! Please take action to restore margin health.
+          </Alert>
+        </Snackbar>
       </Container>
       
       <Box 

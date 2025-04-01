@@ -80,8 +80,6 @@ def start_market_data_thread():
     thread.daemon = True
     thread.start()
 
-# Add to backend/app.py
-
 @app.route('/api/positions/<int:client_id>', methods=['GET'])
 def get_client_positions(client_id):
     positions = Position.query.filter_by(client_id=client_id).all()

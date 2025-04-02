@@ -60,8 +60,9 @@ const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({ positions, margin
     );
     
     // Calculate margin status
+    const maintenaceMarginRate = 0.25; // 25% maintenance margin requirement as default
     const netEquity = portfolioMarketValue - loanAmount;
-    const marginRequirement = 0.25 * portfolioMarketValue; //TODO: Use actual margin requirement
+    const marginRequirement = maintenaceMarginRate * portfolioMarketValue;
     const marginShortfall = marginRequirement - netEquity;
     
     setSimulatedStatus({

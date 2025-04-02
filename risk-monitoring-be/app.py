@@ -167,6 +167,45 @@ def get_margin_status(client_id):
     
     return jsonify(result)
 
+@app.route('/api/loan/pay', methods=['POST'])
+def pay_loan():
+    data = request.json
+    client_id = data.get('client_id')
+    payment_amount = data.get('payment_amount')
+
+    if not client_id or not payment_amount:
+        return jsonify({'error': 'Missing client_id or payment_amount'}), 400
+
+    margin = Margin.query.filter_by(client_id=client_id).first()
+    if not margin:
+        return jsonify({'error': 'Margin information not found for this client'}), 404
+
+    if payment_amount > margin.loan_amount:
+        return jsonify({'error': 'Payment amount exceeds loan amount'}), 400
+
+    margin.loan_amount -= payment_amount
+    db.session.commit()
+
+    return jsonify({'message': 'Loan payment successful', 'new_loan_amount': margin.loan_amount}), 200
+
+@app.route('/api/loan/increase', methods=['POST'])
+def increase_loan():
+    data = request.json
+    client_id = data.get('client_id')
+    loan_increase_amount = data.get('loan_increase_amount')
+
+    if not client_id or not loan_increase_amount:
+        return jsonify({'error': 'Missing client_id or loan_increase_amount'}), 400
+
+    margin = Margin.query.filter_by(client_id=client_id).first()
+    if not margin:
+        return jsonify({'error': 'Margin information not found for this client'}), 404
+
+    margin.loan_amount += loan_increase_amount
+    db.session.commit()
+
+    return jsonify({'message': 'Loan increase successful', 'new_loan_amount': margin.loan_amount}), 200
+
 # Start market data thread when app is running
 if __name__ == '__main__':
     start_market_data_thread()

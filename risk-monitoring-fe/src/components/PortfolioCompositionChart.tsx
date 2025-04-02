@@ -1,6 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, Divider } from '@mui/material';
 import { Position } from '../services/api';
 
 interface PortfolioCompositionChartProps {
@@ -20,13 +20,14 @@ const PortfolioCompositionChart: React.FC<PortfolioCompositionChartProps> = ({ p
   const totalValue = positions.reduce((sum, position) => sum + position.market_value, 0);
 
   return (
-    <Paper sx={{ p: 2, height: 350 }}>
+    <Paper sx={{ p: 2, height: '100%', width: '100%'}}>
       <Typography variant="h6" gutterBottom>
         Portfolio Composition
       </Typography>
-      <Box sx={{ height: 280 }}>
+      <Divider sx={{ mb: 2 }} />
+      <Box sx={{ height: '80%', width: '100%', position: 'relative' }}>
         {positions.length > 0 ? (
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="80%">
             <PieChart>
               <Pie
                 data={data}

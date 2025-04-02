@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import { 
   Paper, Typography, Box, FormControl,
-  InputLabel, Select, MenuItem, SelectChangeEvent 
+  InputLabel, Select, MenuItem, SelectChangeEvent, Divider
 } from '@mui/material';
 import { Position } from '../services/api';
 
@@ -13,7 +13,7 @@ interface PriceHistoryProps {
   positions: Position[];
 }
 
-// Simulated price history data (in a real app, you'd fetch this from an API)
+// Simulated price history data (in a real app, we will fetch this from an API)
 const generatePriceHistory = (symbol: string, currentPrice: number) => {
   const days = 30;
   const volatility = 0.02; // 2% daily volatility
@@ -62,7 +62,7 @@ const PriceHistoryChart: React.FC<PriceHistoryProps> = ({ positions }) => {
   };
   
   return (
-    <Paper sx={{ p: 2, height: 350 }}>
+    <Paper sx={{ p: 2, height: '100%', width: '100%' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6">Price History</Typography>
         <FormControl size="small" sx={{ minWidth: 120 }}>
@@ -80,8 +80,10 @@ const PriceHistoryChart: React.FC<PriceHistoryProps> = ({ positions }) => {
           </Select>
         </FormControl>
       </Box>
+
+      <Divider sx={{ mb: 2 }} />
       
-      <Box sx={{ height: 270 }}>
+      <Box sx={{ height: '84%' }}>
         {priceData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart

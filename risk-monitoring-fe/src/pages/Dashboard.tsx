@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Grid, Typography, Box, CircularProgress, Tab, Tabs, Snackbar, Alert } from '@mui/material';
 import PositionsTable from '../components/PositionsTable';
-import MarginStatusCard from '../components/MarginStatusCard';
 import PortfolioCompositionChart from '../components/PortfolioCompositionChart';
-import MarginHealthGauge from '../components/MarginHealthGauge';
+import MarginHealthCard from '../components/MarginHealthCard';
 import PriceHistoryChart from '../components/PriceHistoryChart';
 import Header from '../components/Header';
 import PortfolioSummary from '../components/PortfolioSummary';
@@ -64,7 +63,7 @@ const Dashboard: React.FC = () => {
         getPositions(clientId),
         getMarginStatus(clientId)
       ]);
-      
+
       setPositions(positionsData);
       setMarginStatus(marginStatusData);
       setLastUpdated(new Date());
@@ -79,10 +78,10 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-    
+
     // Set up polling for real-time updates
     const intervalId = setInterval(fetchData, 60000); // Poll every minute
-    
+
     return () => clearInterval(intervalId);
   }, [fetchData]);
 
@@ -107,25 +106,31 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
       {marginStatus && (
-        <Header 
-          marginStatus={marginStatus} 
-          onRefresh={fetchData} 
-          lastUpdated={lastUpdated} 
+        <Header
+          marginStatus={marginStatus}
+          onRefresh={fetchData}
+          lastUpdated={lastUpdated}
         />
       )}
-      
+
       <Container maxWidth="lg" sx={{ flex: 1, mb: 4 }}>
         {marginStatus && positions.length > 0 && (
           <>
-            <PortfolioSummary 
-              positions={positions} 
-              marginStatus={marginStatus} 
+            <PortfolioSummary
+              positions={positions}
+              marginStatus={marginStatus}
             />
-            
+
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 4 }}>
-              <Tabs value={activeTab} onChange={handleTabChange} aria-label="dashboard tabs">
+              <Tabs
+                value={activeTab}
+                onChange={handleTabChange}
+                aria-label="dashboard tabs"
+                textColor="primary"
+                indicatorColor="primary"
+              >
                 <Tab label="Overview" />
                 <Tab label="Positions" />
                 <Tab label="Scenario Analysis" />
@@ -133,26 +138,41 @@ const Dashboard: React.FC = () => {
             </Box>
 
             <TabPanel value={activeTab} index={0}>
-              <Grid container spacing={3}>
-                  <MarginStatusCard marginStatus={marginStatus} />
-                  <MarginHealthGauge marginStatus={marginStatus} />
-                  <PortfolioCompositionChart positions={positions} />
-                  <PriceHistoryChart 
-                    positions={positions} 
-                  />
-              </Grid>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(560px, 1fr))',
+                  gap: 2,
+                  mb: 4,
+                }}
+              >
+                <MarginHealthCard marginStatus={marginStatus} />
+                <PortfolioCompositionChart positions={positions} />
+              </Box>
             </TabPanel>
-            
+
             <TabPanel value={activeTab} index={1}>
-              <PositionsTable 
-                positions={positions} 
+            <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, 1fr)',
+                  gap: 2,
+                  mb: 4,
+                }}
+              >
+              <PositionsTable
+                positions={positions}
               />
+              <Box sx={{ mt: 3}}>
+                <PriceHistoryChart positions={positions} />
+              </Box>
+              </Box>
             </TabPanel>
-            
+
             <TabPanel value={activeTab} index={2}>
-              <ScenarioSimulator 
-                positions={positions} 
-                marginStatus={marginStatus} 
+              <ScenarioSimulator
+                positions={positions}
+                marginStatus={marginStatus}
               />
             </TabPanel>
           </>
@@ -169,19 +189,19 @@ const Dashboard: React.FC = () => {
           </Alert>
         </Snackbar>
       </Container>
-      
-      <Box 
-        component="footer" 
-        sx={{ 
-          py: 2, 
-          bgcolor: 'primary.main', 
-          color: 'white',
+
+      <Box
+        component="footer"
+        sx={{
+          py: 2,
+          bgcolor: 'primary.main',
+          color: 'secondary.main',
           mt: 'auto'
         }}
       >
         <Container maxWidth="lg">
-          <Typography variant="body2" align="center">
-            © {new Date().getFullYear()} Trading Platform. All rights reserved.
+          <Typography variant="body2" align="center" sx={{ fontFamily: 'Public Sans, Arial, sans-serif' }}>
+            © {new Date().getFullYear()} Risk Management Platform. All rights reserved.
           </Typography>
         </Container>
       </Box>

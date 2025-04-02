@@ -90,6 +90,7 @@ const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({ positions, margin
   return (
     <Paper sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>Scenario Simulator</Typography>
+      <Divider sx={{ mb: 2 }} />
       <Typography variant="body2" color="text.secondary" paragraph>
         Adjust market conditions to see how they would affect your margin status.
       </Typography>
@@ -110,19 +111,21 @@ const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({ positions, margin
         </FormControl>
         
         <Typography gutterBottom>Market Price Change: {marketChange}%</Typography>
-        <Slider
-          value={marketChange}
-          onChange={handleMarketChangeChange}
-          min={-50}
-          max={50}
-          step={1}
-          marks={[
-            { value: -50, label: '-50%' },
-            { value: 0, label: '0%' },
-            { value: 50, label: '+50%' }
-          ]}
-          valueLabelDisplay="auto"
-        />
+        <Box sx={{ px: 2 }}>
+            <Slider
+                value={marketChange}
+                onChange={handleMarketChangeChange}
+                min={-50}
+                max={50}
+                step={1}
+                marks={[
+                    { value: -50, label: '-50%' },
+                    { value: 0, label: '0%' },
+                    { value: 50, label: '+50%' }
+                ]}
+                valueLabelDisplay="auto"
+            />
+        </Box>
       </Box>
       
       <Box sx={{ mb: 3 }}>

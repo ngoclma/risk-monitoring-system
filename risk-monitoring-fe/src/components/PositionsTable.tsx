@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Table, TableBody, TableCell, TableContainer, TableHead, 
-  TableRow, Paper, Typography 
+  TableRow, Paper, Typography, Divider
 } from '@mui/material';
 import { Position } from '../services/api';
 
@@ -11,18 +11,17 @@ interface PositionsTableProps {
 
 const PositionsTable: React.FC<PositionsTableProps> = ({ positions }) => {
   return (
-    <TableContainer component={Paper}>
-      <Typography variant="h6" sx={{ p: 2 }}>Client Positions</Typography>
+    <TableContainer component={Paper} sx={{ p: 0 }}>
       <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Symbol</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Cost Basis ($)</TableCell>
-            <TableCell align="right">Current Price ($)</TableCell>
-            <TableCell align="right">Market Value ($)</TableCell>
-          </TableRow>
-        </TableHead>
+      <TableHead>
+        <TableRow sx={{ bgcolor: 'primary.main' }}>
+          <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Symbol</TableCell>
+          <TableCell align="right" sx={{ color: 'white', fontWeight: 'bold' }}>Quantity</TableCell>
+          <TableCell align="right" sx={{ color: 'white', fontWeight: 'bold' }}>Cost Basis ($)</TableCell>
+          <TableCell align="right" sx={{ color: 'white', fontWeight: 'bold' }}>Current Price ($)</TableCell>
+          <TableCell align="right" sx={{ color: 'white', fontWeight: 'bold' }}>Market Value ($)</TableCell>
+        </TableRow>
+      </TableHead>
         <TableBody>
           {positions.map((position) => (
             <TableRow key={position.id}>

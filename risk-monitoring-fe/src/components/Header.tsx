@@ -18,9 +18,11 @@ const Header: React.FC<HeaderProps> = ({ marginStatus, onRefresh, lastUpdated })
   const theme = useTheme();
   
   return (
-    <AppBar position="static" sx={{ mb: 3 }}>
+    <AppBar position="static" sx={{ mb: 3, bgcolor: theme.palette.primary.dark }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Box component="img" src="/lighthouse_canton_logo.png" alt="Logo" sx={{ height: 40, mr: 8 }} />
+
+        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           Risk Monitoring System
         </Typography>
         

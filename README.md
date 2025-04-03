@@ -32,7 +32,7 @@ This application follows a three-tier architecture:
 - Node.js and npm
 - Python 3.8+
 - PostgreSQL
-- API key from a stock market data provider (e.g., Twelve Data)
+- API key from a stock market data provider (Twelve Data). Please obtain your free API key here: https://twelvedata.com/pricing.
 
 ### Database Setup
 
@@ -46,7 +46,7 @@ This application follows a three-tier architecture:
 
 1. Navigate to the backend directory:
    ```bash
-   cd backend
+   cd risk-monitoring-be
    ```
 
 2. Create and activate a virtual environment:
@@ -60,7 +60,7 @@ This application follows a three-tier architecture:
    pip install flask flask-sqlalchemy flask-cors psycopg2-binary requests python-dotenv
    ```
 
-4. Create a `.env` file in the backend directory:
+4. Create a `.env` file in the risk-monitoring-be directory:
    ```
    MARKET_API_KEY=your_api_key_here
    ```
@@ -79,7 +79,7 @@ This application follows a three-tier architecture:
 
 1. Navigate to the client directory:
    ```bash
-   cd client
+   cd risk-monitoring-fe
    ```
 
 2. Install dependencies:
@@ -102,6 +102,8 @@ This application follows a three-tier architecture:
 - **GET /api/positions/:clientId**: Retrieves all positions for a specific client
 - **GET /api/margin-status/:clientId**: Calculates and returns margin status for a client
 - **POST /api/positions**: Creates a new position
+- **POST /api/loan/pay**: Payoff loan
+- **POST /api/loan/increase**: Increase loan
 
 ### Sample API Requests
 
@@ -138,4 +140,6 @@ Sample test case:
 2. Market data is fetched at fixed intervals rather than through a live streaming connection
 3. No authentication system is implemented in this minimal version
 4. The free tier of market data APIs may have request limits
-5. No notifications system for margin calls (besides UI indication)
+
+## Demo
+Please find the screenshots for demonstration here: https://docs.google.com/document/d/1ydeHR8ZcdhAOBjdME4Rru_2FsLZ_YlnC5VHuS_CZBHc/edit?usp=sharing

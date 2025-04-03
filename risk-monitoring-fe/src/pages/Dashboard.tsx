@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Grid, Typography, Box, CircularProgress, Tab, Tabs, Snackbar, Alert } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Tab, Tabs, Snackbar, Alert } from '@mui/material';
 import PositionsTable from '../components/PositionsTable';
 import PortfolioCompositionChart from '../components/PortfolioCompositionChart';
 import MarginHealthCard from '../components/MarginHealthCard';
@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import PortfolioSummary from '../components/PortfolioSummary';
 import ScenarioSimulator from '../components/ScenarioSimulator';
 import { getPositions, getMarginStatus, Position, MarginStatus } from '../services/api';
+import { mockPositions, mockMarginStatus } from '../mockData';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,8 +70,15 @@ const Dashboard: React.FC = () => {
       setLastUpdated(new Date());
       setError(null);
     } catch (err) {
-      setError('Failed to fetch data. Please try again later.');
-      console.error(err);
+      console.warn('API fetch failed, falling back to mock data:', err);
+      
+      setPositions(mockPositions);
+      setMarginStatus(mockMarginStatus);
+      setLastUpdated(new Date());
+      
+      if (!mockPositions || !mockMarginStatus) {
+        setError('Failed to load data. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }

@@ -58,7 +58,7 @@ def fetch_market_data():
                 market_data = MarketData.query.filter_by(symbol=symbol).first()
                 if market_data:
                     market_data.current_price = float(data['price'])
-                    market_data.timestamp = datetime.utcnow()
+                    market_data.timestamp = datetime.datetime.utcnow()
                 else:
                     new_data = MarketData(
                         symbol=symbol,
@@ -74,7 +74,7 @@ def start_market_data_thread():
     def run_market_data_updates():
         while True:
             fetch_market_data()
-            time.sleep(60)  # Update every minute
+            time.sleep(6000)  # Update every minute
             
     thread = threading.Thread(target=run_market_data_updates)
     thread.daemon = True

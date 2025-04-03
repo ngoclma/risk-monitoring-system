@@ -1,4 +1,3 @@
-import React from 'react';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import Dashboard from './pages/Dashboard';
 
@@ -9,9 +8,6 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FFFFFF',
-    },
-    error: {
-      main: '#D32F2F', // Red for alerts
     },
     background: {
       default: '#FAFAFA',

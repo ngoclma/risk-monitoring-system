@@ -96,9 +96,9 @@ const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({ positions, marginSt
                             <Chip
                                 size="small"
                                 sx={{ ml: 1 }}
-                                icon={<ArrowUpwardIcon />}
+                                icon={bestPosition.gainLoss < 0 ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
                                 label={`${bestPosition.gainLoss.toFixed(2)}%`}
-                                color="success"
+                                color={bestPosition.gainLoss < 0 ? 'error' : 'success'}
                             />
                         </Box>
                     </Box>
@@ -112,7 +112,7 @@ const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({ positions, marginSt
                             <Chip
                                 size="small"
                                 sx={{ ml: 1 }}
-                                icon={<ArrowDownwardIcon />}
+                                icon={worstPosition.gainLoss < 0 ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
                                 label={`${worstPosition.gainLoss.toFixed(2)}%`}
                                 color={worstPosition.gainLoss < 0 ? 'error' : 'success'}
                             />

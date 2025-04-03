@@ -28,7 +28,7 @@ const LoanManagementModal: React.FC<LoanManagementModalProps> = ({
   const [amount, setAmount] = useState<number>(0);
   const [error, setError] = useState<string>('');
 
-  const maxLoanIncrease = marginStatus.portfolio_market_value * 0.5 - marginStatus.loan_amount;
+  const maxLoanIncrease = marginStatus.portfolio_market_value * 0.5 - marginStatus.loan_amount; // Use 0.5 instead of 0.75 to account for market value change
 
   const handlePayLoan = async () => {
     try {

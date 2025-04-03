@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Table, TableBody, TableCell, TableContainer, TableHead, 
-  TableRow, Paper, Typography, Divider
+  TableRow, Paper
 } from '@mui/material';
 import { Position } from '../services/api';
 
